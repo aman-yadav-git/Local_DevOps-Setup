@@ -1,16 +1,19 @@
 # Docker + Kubernetes Local DevOps Setup
 
-This project contains my local DevOps practice environment using Docker and Kubernetes on Fedora Linux.  
-The main goal of this setup is to practice containerization, orchestration, automation, and deployment workflows locally without depending on cloud infrastructure like AWS.
+
+***This project contains my local DevOps practice environment using Docker and Kubernetes on Fedora Linux.  
+The main goal of this setup is to practice containerization, orchestration, automation, and deployment workflows locally.***
+
 
 ---
 
-# Why This Setup
+### Why This Setup
+
 
 Using cloud resources continuously can increase cost, especially during learning and testing.  
 To avoid unnecessary cloud charges, this setup provides a lightweight local environment for hands-on DevOps practice.
 
-This environment helps in learning:
+**This environment helps in learning:**
 
 - Linux administration
 - Containerization
@@ -21,9 +24,9 @@ This environment helps in learning:
 - Troubleshooting
 - Automation practices
 
----
 
-# Technologies Used
+### Technologies Used
+
 
 - Fedora Linux
 - Docker Engine
@@ -33,16 +36,30 @@ This environment helps in learning:
 - Bash
 - YAML
 
+
+### Architecture Overview
+```
+text
+Fedora Linux Host
+│
+├── Docker Engine
+│    ├── Containers
+│    ├── Images
+│    └── Kubernetes Nodes (Kind)
+│
+└── Kubernetes Cluster
+     ├── Control Plane
+     └── Worker Nodes
+```
+
 ---
 
+### Docker Setup
 
-
----
-# Docker Setup
 
 - Docker is used to create lightweight containers for running applications and services locally.
 
-# Docker Installation
+###Docker Installation
 
 Installed:
 
@@ -51,11 +68,16 @@ docker-ce-cli
 containerd.io
 docker compose plugin
 
-# STEP 1 — Update Fedora
 
-sudo dnf update -y     (Updates package metadata & Fixes dependency problems later)
+> STEP 1 — Update Fedora
 
-Remove old docker packages
+**Updates package metadata & Fixes dependency problems later**
+```
+sudo dnf update -y    
+```
+
+> STEP 2 Remove old docker packages
+```
 sudo dnf remove docker \
                 docker-client \
                 docker-client-latest \
@@ -64,38 +86,47 @@ sudo dnf remove docker \
                 docker-latest-logrotate \
                 docker-logrotate \
                 docker-engine
+```
 
-# STEP 3 — Add Docker Repository
-
+> STEP 3 — Add Docker Repository
+```
 sudo dnf -y install dnf-plugins-core
-
-sudo dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo       (This adds official Docker packages.)
-
-# STEP 4 — Install Docker Engine
-
+```
+**This adds official Docker packages.**
+```
+sudo dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+```
+> STEP 4 — Install Docker Engine
+```
 sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-p# lugin -y
-
-# STEP 5 — Start Docker
-
-sudo systemctl enable --now docker
-
-sudo systemctl enable --now docker (Check)
-
-# STEP 6 — Allow Non-root Docker Usage
+```
+> STEP 5 — Start Docker
+```
+sudo systemctl enable --now docker`
+```
+**Check**
+```
+sudo systemctl enable --now docker` 
+```
+> STEP 6 — Allow Non-root Docker Usage
 
 - Without this, every docker command needs sudo.
 
-- Add user to docker group:-
-
+**Add user to docker group:**
+```
 sudo usermod -aG docker $USER
-
+```
+```
 newgrp docker
+```
+> STEP 7 — Test Docker
 
-# STEP 7 — Test Docker
+```
+docker run hello-world   
+```
+**If successful then Docker is working**
 
-docker run hello-world   (If successful then Docker is working )
-
-# Docker Features Practiced
+> Docker Features Practiced
 - Pulling images
 - Running containers
 - Building Docker images
@@ -104,10 +135,20 @@ docker run hello-world   (If successful then Docker is working )
 - Docker Compose
 - Container troubleshooting
 
-# Example Commands
+> Example Commands
 - docker pull ubuntu
 - docker run -it ubuntu bash
 - docker ps
 - docker images
 - docker logs
 
+> STEP 8 — Learn Basic Docker First
+
+DO NOT jump into Kubernetes immediately.
+
+Spend some days learning:
+
+**Pull image**
+```
+docker pull ubuntu
+```
